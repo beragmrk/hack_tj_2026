@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 205 39% 7%;
+  --foreground: 188 29% 92%;
+  --card: 198 36% 10%;
+  --card-foreground: 190 28% 91%;
+  --primary: 165 74% 67%;
+  --muted: 201 28% 21%;
+  --accent: 13 82% 62%;
+  --destructive: 0 70% 56%;
+}
+
+* {
+  border-color: rgba(166, 224, 220, 0.18);
+}
+
+body {
+  color: hsl(var(--foreground));
+  background:
+    radial-gradient(circle at 80% 10%, rgba(255, 136, 95, 0.19), transparent 30%),
+    radial-gradient(circle at 20% 20%, rgba(100, 224, 198, 0.17), transparent 35%),
+    linear-gradient(140deg, #081319 0%, #0d1a24 45%, #11141e 100%);
+  min-height: 100vh;
+}
+
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(153, 245, 222, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(153, 245, 222, 0.07) 1px, transparent 1px);
+  background-size: 26px 26px;
+}
+
+.waveform {
+  background: linear-gradient(180deg, rgba(70, 170, 140, 0.18), rgba(30, 56, 67, 0.05));
+}

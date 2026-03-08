@@ -1,0 +1,38 @@
+# Node
+node_modules
+.next
+out
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Python
+__pycache__
+*.pyc
+.pytest_cache
+.venv
+.venv-replay
+
+# Local toolchains
+.tools
+
+# Rust
+target
+
+# Env
+.env
+.env.*
+
+# OS
+.DS_Store
+
+# Generated artifacts
+services/proof-service/circuits/*.ptau
+services/proof-service/circuits/*.zkey
+services/proof-service/circuits/*.wasm
+services/proof-service/circuits/*.wtns
+services/proof-service-node/circuits/*.ptau
+services/proof-service-node/circuits/*.zkey
+services/proof-service-node/circuits/*.wasm
+services/proof-service-node/circuits/*.wtns

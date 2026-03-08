@@ -1,0 +1,77 @@
+services:
+  db:
+    image: timescale/timescaledb:latest-pg16
+    container_name: pulsemesh-db
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-pulsemesh}
+      POSTGRES_USER: ${POSTGRES_USER:-pulsemesh}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-pulsemesh}
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./infra/db/migrations:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-pulsemesh} -d ${POSTGRES_DB:-pulsemesh}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  gateway:
+    build:
+      context: ./services/gateway-rust
+      dockerfile: Dockerfile
+    container_name: pulsemesh-gateway
+    environment:
+      GATEWAY_BIND: ${GATEWAY_BIND:-0.0.0.0:8080}
+      SIMULATOR_ENABLED: ${SIMULATOR_ENABLED:-true}
+      RUST_LOG: info
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  inference:
+    build:
+      context: ./services/inference-python
+      dockerfile: Dockerfile
+    container_name: pulsemesh-inference
+    environment:
+      INFERENCE_HOST: ${INFERENCE_HOST:-0.0.0.0}
+      INFERENCE_PORT: ${INFERENCE_PORT:-8000}
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  proof:
+    build:
+      context: ./services/proof-service-node
+      dockerfile: Dockerfile
+    container_name: pulsemesh-proof
+    environment:
+      PROOF_PORT: ${PROOF_PORT:-7000}
+    ports:
+      - "7000:7000"
+
+  web:
+    build:
+      context: ./apps/web
+      dockerfile: Dockerfile
+    container_name: pulsemesh-web
+    environment:
+      NEXT_PUBLIC_GATEWAY_WS_URL: ${NEXT_PUBLIC_GATEWAY_WS_URL:-ws://localhost:8080/ws}
+      NEXT_PUBLIC_GATEWAY_HTTP_URL: ${NEXT_PUBLIC_GATEWAY_HTTP_URL:-http://localhost:8080}
+      NEXT_PUBLIC_INFERENCE_URL: ${NEXT_PUBLIC_INFERENCE_URL:-http://localhost:8000}
+      NEXT_PUBLIC_PROOF_URL: ${NEXT_PUBLIC_PROOF_URL:-http://localhost:7000}
+    ports:
+      - "3000:3000"
+    depends_on:
+      - gateway
+      - inference
+      - proof
+
+volumes:
+  db_data:
