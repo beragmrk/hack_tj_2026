@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 204 34% 96%;
+  --foreground: 212 38% 18%;
+  --card: 210 33% 99%;
+  --card-foreground: 213 35% 20%;
+  --primary: 198 52% 38%;
+  --muted: 206 24% 91%;
+  --accent: 25 90% 49%;
+  --destructive: 4 74% 48%;
+}
+
+* {
+  border-color: rgba(126, 160, 182, 0.35);
+}
+
+body {
+  color: hsl(var(--foreground));
+  background:
+    radial-gradient(circle at 82% 2%, rgba(165, 199, 222, 0.24), transparent 42%),
+    radial-gradient(circle at 10% 12%, rgba(210, 228, 240, 0.42), transparent 48%),
+    linear-gradient(172deg, #f4f8fb 0%, #eaf2f8 52%, #e2edf5 100%);
+  font-family:
+    "Avenir Next",
+    "Segoe UI Variable",
+    "Segoe UI",
+    "Noto Sans",
+    "Helvetica Neue",
+    sans-serif;
+  letter-spacing: 0.01em;
+  min-height: 100vh;
+}
+
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(132, 168, 188, 0.16) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(132, 168, 188, 0.16) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.waveform {
+  background: linear-gradient(180deg, rgba(185, 214, 229, 0.42), rgba(236, 244, 250, 0.35));
+}
+
+.panel-sheen {
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, 0.62), rgba(255, 255, 255, 0.18)),
+    linear-gradient(180deg, rgba(239, 247, 252, 0.97), rgba(232, 242, 249, 0.93));
+}
+
+.clinical-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.clinical-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(120, 155, 177, 0.48);
+  border-radius: 999px;
+}
+
+.clinical-scrollbar::-webkit-scrollbar-track {
+  background: rgba(222, 234, 242, 0.45);
+}
